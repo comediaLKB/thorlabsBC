@@ -42,6 +42,7 @@ def nacres_from_thorlabs(code, name):
         (code[0:3]=='BBD') or
         (code[0:3]=='PFD') or
         (code[0:2]=='UM') or
+        (code[0:2]=='BB') or
         (code[0:3]=='BFE') 
         ):
         return 'OA.02'

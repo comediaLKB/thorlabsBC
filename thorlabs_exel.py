@@ -29,7 +29,10 @@ def num2str(num):
 # INPUT
 file_path = easygui.fileopenbox("select a shoppingCart exel file created from Thorlabs site")
 target_dir = os.sep.join(file_path.split(os.sep)[:-1])+os.sep
-discount = 0.09
+
+discount = float(easygui.integerbox("Enter the discount in %", "Discount", 9))/100.
+shipping_cost = float(easygui.enterbox("Enter the shipping cost HT"))
+
 
 # load input data - check first the existence of .xls (default from thorlabs site), 
 # then the .xlsx (from original implementation of this code)
@@ -104,8 +107,11 @@ for idx in range(nr_items):
     output_ws.merge_cells(start_row=first_row+idx, start_column=2, end_row=first_row+idx, end_column=4)
     output_ws.merge_cells(start_row=first_row+idx, start_column=5, end_row=first_row+idx, end_column=6)
 
+# insert the shipping cost
+output_ws.cell(row=first_row+nr_items, column=10).value = num2str(shipping_cost)
+
 # calculate total price    
-price_nr_brut_disc_sum = round(np.sum(price_full_disc),2)
+price_nr_brut_disc_sum = round(np.sum(price_full_disc)+shipping_cost,2)
 
 # insert total amount in output file
 output_ws.cell(row=first_row+nr_items+1, column=10).value = num2str(price_nr_brut_disc_sum)
