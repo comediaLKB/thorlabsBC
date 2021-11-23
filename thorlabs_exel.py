@@ -10,10 +10,8 @@ Created on Fri Feb  5 21:47:56 2021
 import numpy as np
 from datetime import date
 from google_trans_new.google_trans_new import google_translator
-import easygui
 import openpyxl
 from openpyxl.styles.borders import Border, Side
-import os
 from nacres_from_thorlabs import nacres_from_thorlabs
 
 # define cell boarders join appropriate cells
@@ -27,12 +25,10 @@ def num2str(num):
     return output
 
 # INPUT
-file_path = easygui.fileopenbox("select a shoppingCart exel file created from Thorlabs site")
-target_dir = os.sep.join(file_path.split(os.sep)[:-1])+os.sep
-
-discount = float(easygui.integerbox("Enter the discount in %", "Discount", 9))/100.
-shipping_cost = float(easygui.enterbox("Enter the shipping cost HT"))
-
+target_dir = '/Users/bernhard/Documents/Administration/LKB/Orders/20210715_Gianni_Thorlabs/'
+file_path = target_dir + 'shoppingCart.xls'
+discount = 0.09
+shipping_cost = 13.1
 
 # load input data - check first the existence of .xls (default from thorlabs site), 
 # then the .xlsx (from original implementation of this code)
