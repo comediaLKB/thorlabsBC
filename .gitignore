@@ -1,3 +1,6 @@
+# ignore pycache
+__pycache__/
 
-thorlabsBC_template_signed.xlsx
-__pycache__/nacres_from_thorlabs.cpython-38.pyc
+# ignore bytecode
+*.pyc
+
