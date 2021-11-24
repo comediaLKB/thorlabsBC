@@ -66,7 +66,6 @@ output_ws.insert_rows(first_row, amount=(nr_items-1))
 
 # loop through items
 price_unit = np.zeros((nr_items,))
-price_unit_disc = np.zeros((nr_items,))
 price_full_disc = np.zeros((nr_items,))
 
 for idx in range(nr_items):
@@ -81,8 +80,7 @@ for idx in range(nr_items):
     desc_fr = translator.translate(desc, lang_tgt='fr')
     
     # calulate untaxed, dicount and full price
-    price_unit_disc[idx] = round( (1-discount) * price_unit[idx], 2 )
-    price_full_disc[idx] = round( quantity * price_unit_disc[idx], 2 )
+    price_full_disc[idx] = quantity * (1-discount) * price_unit[idx]
     
     # if available from the dict, fill the NACRES code from the thorlabs code
     # input_data[idx][0] is the key, which is processsed through the nacres_from_thorlabs()
@@ -93,9 +91,9 @@ for idx in range(nr_items):
     output_ws.cell(row=first_row+idx, column=2).value = desc_fr
     output_ws.cell(row=first_row+idx, column=5).value = input_data[idx][0]
     output_ws.cell(row=first_row+idx, column=7).value = nacres
-    output_ws.cell(row=first_row+idx, column=8).value = num2str(price_unit_disc[idx])
+    output_ws.cell(row=first_row+idx, column=8).value = num2str(round(price_unit[idx],2))
     output_ws.cell(row=first_row+idx, column=9).value = num2str(discount*100)
-    output_ws.cell(row=first_row+idx, column=10).value = num2str(price_full_disc[idx])
+    output_ws.cell(row=first_row+idx, column=10).value = num2str(round(price_full_disc[idx],2))
     
     # fix cell boarders join appropriate cells
     for idx_col in range(1,11):
