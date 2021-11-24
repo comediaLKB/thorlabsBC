@@ -9,7 +9,7 @@ Created on Fri Feb  5 21:47:56 2021
 
 import numpy as np
 from datetime import date
-from google_trans_new.google_trans_new import google_translator
+from google_trans_new_local.google_trans_new import google_translator
 import openpyxl
 from openpyxl.styles.borders import Border, Side
 from nacres_from_thorlabs import nacres_from_thorlabs
