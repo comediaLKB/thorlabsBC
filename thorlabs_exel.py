@@ -61,8 +61,8 @@ output_ws.cell(row=3, column=10).value = today.strftime("%d/%m/%Y")
 
 # insert necessary rows in output file
 first_row = 10;
-output_ws.insert_rows(first_row, amount=(nr_items-1))  
-# output_ws.insert_rows(first_row, amount=(nr_items))  
+if nr_items > 1:
+    output_ws.insert_rows(first_row, amount=(nr_items-1))  
 
 # loop through items
 price_unit = np.zeros((nr_items,))
@@ -105,10 +105,10 @@ for idx in range(nr_items):
 output_ws.cell(row=first_row+nr_items, column=10).value = num2str(shipping_cost)
 
 # calculate total price    
-price_nr_brut_disc_sum = round(np.sum(price_full_disc)+shipping_cost,2)
+price_nr_brut_disc_sum = np.sum(price_full_disc)+shipping_cost
 
 # insert total amount in output file
-output_ws.cell(row=first_row+nr_items+1, column=10).value = num2str(price_nr_brut_disc_sum)
+output_ws.cell(row=first_row+nr_items+1, column=10).value = num2str(round(price_nr_brut_disc_sum,2))
     
 # save output file
 output_file = target_dir + 'thorlabsBC.xlsx'
