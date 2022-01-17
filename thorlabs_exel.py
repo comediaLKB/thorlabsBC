@@ -9,6 +9,7 @@ Created on Fri Feb  5 21:47:56 2021
 
 import numpy as np
 from datetime import date
+import google_trans_new_local
 from google_trans_new_local.google_trans_new import google_translator
 import openpyxl
 from openpyxl.styles.borders import Border, Side
@@ -25,10 +26,10 @@ def num2str(num):
     return output
 
 # INPUT
-target_dir = '/Users/bernhard/Documents/Administration/LKB/Orders/20210715_Gianni_Thorlabs/'
+target_dir = '/Users/bernhard/Documents/Administration/LKB/Orders/20210715_Gianni_Thorlabs/' #need to be changed according to your own directory
 file_path = target_dir + 'shoppingCart.xls'
 discount = 0.09
-shipping_cost = 13.1
+shipping_cost = 13.1 #need to be verified with actual quote
 
 # load input data - check first the existence of .xls (default from thorlabs site), 
 # then the .xlsx (from original implementation of this code)
@@ -52,7 +53,7 @@ nr_items = idx+1
 print(f'Processing {nr_items} items from {file_path}')
 
 # open output file
-output_wb = openpyxl.load_workbook('thorlabsBC_template.xlsx')
+output_wb = openpyxl.load_workbook(target_dir +'thorlabsBC_template.xlsx') # Work for windows
 output_ws = output_wb.active
 
 # set date of today
