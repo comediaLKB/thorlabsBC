@@ -7,11 +7,21 @@ Created on Fri Feb  5 21:47:56 2021
 
 """
 
+# INPUT
+target_dir = '/Users/bernhard/Documents/Administration/LKB/Orders/20210715_Gianni_Thorlabs/'
+file_path = target_dir + 'shoppingCart.xls'
+discount = 0.09
+shipping_cost = 13.1
+
+import os
 import numpy as np
 from datetime import date
-from google_trans_new_local.google_trans_new import google_translator
 import openpyxl
 from openpyxl.styles.borders import Border, Side
+
+# change working directory to file directory
+os.chdir(os.path.dirname(__file__))
+from google_trans_new_local.google_trans_new import google_translator
 from nacres_from_thorlabs import nacres_from_thorlabs
 
 # define cell boarders join appropriate cells
@@ -23,12 +33,6 @@ def num2str(num):
         pos = len(output) - 6
         output = output[:pos] + '.' + output[pos:]
     return output
-
-# INPUT
-target_dir = '/Users/bernhard/Documents/Administration/LKB/Orders/20210715_Gianni_Thorlabs/'
-file_path = target_dir + 'shoppingCart.xls'
-discount = 0.09
-shipping_cost = 13.1
 
 # load input data - check first the existence of .xls (default from thorlabs site), 
 # then the .xlsx (from original implementation of this code)
