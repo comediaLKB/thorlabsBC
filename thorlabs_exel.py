@@ -7,11 +7,22 @@ Created on Fri Feb  5 21:47:56 2021
 
 """
 
-# INPUT
-target_dir = '/Users/bernhard/Documents/Administration/LKB/Orders/20210715_Gianni_Thorlabs/'
+#%% INPUT
+
+# file location
+target_dir = '/Users/bernhard/Documents/Administration/LKB/Orders/20220118_Thorlabs_Yoonseok/'
 file_path = target_dir + 'shoppingCart.xls'
-discount = 0.09
-shipping_cost = 13.1
+
+# initial dicount given by website (which needs to be added again)
+discount_init = 0.02 # (0.00 for orders below 5k, 0.02 for orders above)
+
+# LKB discount
+discount_fin = 0.09 # generally 0.09
+
+# shipping costs
+shipping_cost = 20.80
+
+#%%
 
 import os
 import numpy as np
@@ -71,20 +82,22 @@ if nr_items > 1:
 # loop through items
 price_unit = np.zeros((nr_items,))
 price_full_disc = np.zeros((nr_items,))
+price_unit_disc = np.zeros((nr_items,))
 
 for idx in range(nr_items):
 
     # get values from input list
     desc = input_data[idx][1]
     quantity = input_data[idx][3]
-    price_unit[idx] = input_data[idx][4]
+    price_unit[idx] = round(input_data[idx][4] / (1-discount_init), 2)
     
     # translate decription to french
     translator = google_translator() 
     desc_fr = translator.translate(desc, lang_tgt='fr')
     
     # calulate untaxed, dicount and full price
-    price_full_disc[idx] = quantity * (1-discount) * price_unit[idx]
+    price_unit_disc[idx] = round((1-discount_fin) * price_unit[idx], 2)
+    price_full_disc[idx] = round(quantity * price_unit_disc[idx], 2)
     
     # if available from the dict, fill the NACRES code from the thorlabs code
     # input_data[idx][0] is the key, which is processsed through the nacres_from_thorlabs()
@@ -95,9 +108,9 @@ for idx in range(nr_items):
     output_ws.cell(row=first_row+idx, column=2).value = desc_fr
     output_ws.cell(row=first_row+idx, column=5).value = input_data[idx][0]
     output_ws.cell(row=first_row+idx, column=7).value = nacres
-    output_ws.cell(row=first_row+idx, column=8).value = num2str(round(price_unit[idx],2))
-    output_ws.cell(row=first_row+idx, column=9).value = num2str(discount*100)
-    output_ws.cell(row=first_row+idx, column=10).value = num2str(round(price_full_disc[idx],2))
+    output_ws.cell(row=first_row+idx, column=8).value = num2str(price_unit[idx])
+    output_ws.cell(row=first_row+idx, column=9).value = num2str(discount_fin*100)
+    output_ws.cell(row=first_row+idx, column=10).value = num2str(price_full_disc[idx])
     
     # fix cell boarders join appropriate cells
     for idx_col in range(1,11):
@@ -109,10 +122,10 @@ for idx in range(nr_items):
 output_ws.cell(row=first_row+nr_items, column=10).value = num2str(shipping_cost)
 
 # calculate total price    
-price_nr_brut_disc_sum = np.sum(price_full_disc)+shipping_cost
+price_nr_brut_disc_sum = round(np.sum(price_full_disc) + shipping_cost, 2)
 
 # insert total amount in output file
-output_ws.cell(row=first_row+nr_items+1, column=10).value = num2str(round(price_nr_brut_disc_sum,2))
+output_ws.cell(row=first_row+nr_items+1, column=10).value = num2str(price_nr_brut_disc_sum)
     
 # save output file
 output_file = target_dir + 'thorlabsBC.xlsx'

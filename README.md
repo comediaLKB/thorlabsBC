@@ -7,7 +7,8 @@ The script reads a Thorlabs shopping cart file (.xls or .xlsx). It grabs the des
 ## usage:
 - open the thorlabs_exel.py script and go to the INPUT bloc
 - enter the target directory where the 'shoppingCart.xls' file can be found and where you want the output BC file to be stored
-- check the dicount which is usually 9% for the LKB (i.e. enter 0.09)
+- check if you got an initial discount subtracted by the webshop (usually 2% for orders above 5k). If so enter it (i.e. discount_init = 0.02), otherwise set it to zero.
+- check the dicount which is usually 9% for the LKB (i.e. discount_fin = 0.09)
 - enter the shipping costs and run the code
 - ALWAYS CHECK THE GENERATED QUOTE IF THE INFOS ARE CORRECT!!
 
