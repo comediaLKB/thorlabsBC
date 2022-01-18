@@ -94,7 +94,7 @@ for idx in range(nr_items):
     
     # translate decription to french
     translator = google_translator() 
-    desc_fr = translator.translate(desc, lang_tgt='fr')
+    desc_fr = translator.translate(desc, lang_src='en', lang_tgt='fr')
     
     # calulate untaxed, dicount and full price
     price_unit_disc[idx] = round((1-discount_fin) * price_unit[idx], 2)
