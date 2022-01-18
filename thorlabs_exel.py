@@ -29,6 +29,7 @@ import numpy as np
 from datetime import date
 import openpyxl
 from openpyxl.styles.borders import Border, Side
+from openpyxl.styles import Alignment
 
 # change working directory to file directory
 os.chdir(os.path.dirname(__file__))
@@ -112,6 +113,11 @@ for idx in range(nr_items):
     output_ws.cell(row=first_row+idx, column=9).value = num2str(discount_fin*100)
     output_ws.cell(row=first_row+idx, column=10).value = num2str(price_full_disc[idx])
     
+    # fix cell alignment
+    output_ws.cell(row=first_row+idx, column=8).alignment = Alignment(horizontal='right')
+    output_ws.cell(row=first_row+idx, column=9).alignment = Alignment(horizontal='right')
+    output_ws.cell(row=first_row+idx, column=10).alignment = Alignment(horizontal='right')
+    
     # fix cell boarders join appropriate cells
     for idx_col in range(1,11):
         output_ws.cell(row=first_row+idx, column=idx_col).border = thin_border
@@ -120,12 +126,14 @@ for idx in range(nr_items):
 
 # insert the shipping cost
 output_ws.cell(row=first_row+nr_items, column=10).value = num2str(shipping_cost)
+output_ws.cell(row=first_row+nr_items, column=10).alignment = Alignment(horizontal='right')
 
 # calculate total price    
 price_nr_brut_disc_sum = round(np.sum(price_full_disc) + shipping_cost, 2)
 
 # insert total amount in output file
 output_ws.cell(row=first_row+nr_items+1, column=10).value = num2str(price_nr_brut_disc_sum)
+output_ws.cell(row=first_row+nr_items+1, column=10).alignment = Alignment(horizontal='right')
     
 # save output file
 output_file = target_dir + 'thorlabsBC.xlsx'
