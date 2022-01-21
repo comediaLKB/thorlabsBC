@@ -22,19 +22,45 @@ discount_fin = 0.09 # generally 0.09
 # shipping costs
 shipping_cost = 20.80
 
+# translation mode
+trans_flag = 0 # 0 = google translate API / 1 = DeepL API (500k char / month) 
+
 #%%
 
+import sys
 import os
 import numpy as np
 from datetime import date
 import openpyxl
 from openpyxl.styles.borders import Border, Side
 from openpyxl.styles import Alignment
-
+  
 # change working directory to file directory
 os.chdir(os.path.dirname(__file__))
-from google_trans_new_local.google_trans_new import google_translator
 from nacres_from_thorlabs import nacres_from_thorlabs
+
+# load translate API
+if trans_flag:
+    
+    import deepl
+    
+    # read authentification key
+    try:
+        auth_file = open("auth_deepl.txt", "r")
+        auth_key = auth_file.read()
+    except FileNotFoundError:
+        sys.exit("DeepL authentification key not found!!\nset trans_flag = 0 or provide key in separate auth_deepl.txt file")
+        
+    # initialize translator    
+    translator_deepl = deepl.Translator(auth_key)
+    
+else:
+    
+    # import local modified google translate package
+    from google_trans_new_local.google_trans_new import google_translator
+    
+    # initialize translator  
+    translator_google = google_translator() 
 
 # define cell boarders join appropriate cells
 thin_border = Border(left=Side(style='thin'), right=Side(style='thin'), top=Side(style='thin'), bottom=Side(style='thin'))
@@ -92,10 +118,13 @@ for idx in range(nr_items):
     quantity = input_data[idx][3]
     price_unit[idx] = round(input_data[idx][4] / (1-discount_init), 2)
     
-    # translate decription to french
-    translator = google_translator() 
-    desc_fr = translator.translate(desc, lang_src='en', lang_tgt='fr')
-    
+    # translate decription into french
+    if trans_flag:
+        trans_result = translator_deepl.translate_text(desc, target_lang="FR")
+        desc_fr = trans_result.text
+    else:
+        desc_fr = translator_google.translate(desc, lang_src='en', lang_tgt='fr')
+        
     # calulate untaxed, dicount and full price
     price_unit_disc[idx] = round((1-discount_fin) * price_unit[idx], 2)
     price_full_disc[idx] = round(quantity * price_unit_disc[idx], 2)

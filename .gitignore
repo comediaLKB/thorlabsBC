@@ -6,3 +6,6 @@ __pycache__/
 
 # ignore Mac files
 .DS_Store
+
+# ignore DeepL authentification key files
+auth_deepl.txt
