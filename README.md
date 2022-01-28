@@ -19,5 +19,6 @@ The script reads a Thorlabs shopping cart file (.xls or .xlsx). It grabs the des
 - The "Code Nomenclature" NACRES is partially implemented for the most common articles. The full NACRES table is included in the repo for reference. Take a look at "nacres_from_thorlabs.py" if you want to implement a simple rule for an item. Be sure the rule applies in any scenario and no other items could be included accidentially (e.g. when using a rule by word matching, just try to type the word in the search box of the thorlabs site and see if only the articles you had in mind are popping out)
 
 ## known issues:
-- The implementation of the google translate API has some problems. Sometimes strange translations appear although entering the same text in the google translate web mask gives good results.
+- The implementation of the google translate API has some problems. Sometimes strange translations appear although entering the same text in the google translate web mask gives good results. Use the DeepL option for better translations (see above).
+- If the webshop subtracts a discount it rounds to the next cent value. As this operation cannot be deterministically reversed there can be price differences of +/- 1 cent in the item prices from orders where the initial discount is added again.
 

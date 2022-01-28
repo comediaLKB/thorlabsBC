@@ -14,7 +14,7 @@ target_dir = '/Users/bernhard/Documents/Administration/LKB/Orders/20220118_Thorl
 file_path = target_dir + 'shoppingCart.xls'
 
 # initial dicount given by website (which needs to be added again)
-discount_init = 0.02 # (0.00 for orders below 5k, 0.02 for orders above)
+discount_init = 0.00 # (0.00 for orders below 5k, 0.02 for orders above !)
 
 # LKB discount
 discount_fin = 0.09 # generally 0.09
