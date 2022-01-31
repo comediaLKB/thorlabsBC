@@ -5,13 +5,13 @@ Automatic generation of an LKB bon de command (BC) for ThorLabs orders.
 The script reads a Thorlabs shopping cart file (.xls or .xlsx). It grabs the description and pricing information form the file, adds the discount, translates the description into french via a cloud API and checks the "Code Nomenclature" where implemented. Finally, everything is written to the template bon de command in .xlsx format.  
 
 ## usage:
-- if you you are not from team Gigan edit the 'Equipe' and 'NOM PERMANENT' fields accordingly
-- open the thorlabs_exel.py script and go to the INPUT bloc
-- enter the target directory where the 'shoppingCart.xls' file can be found and where you want the output BC file to be stored
-- check if you got an initial discount subtracted by the webshop (usually 2% for orders above 5k). If so enter it (i.e. discount_init = 0.02), otherwise set it to zero.
-- check the dicount which is usually 9% for the LKB (i.e. discount_fin = 0.09)
-- enter the shipping costs and run the code
-- ALWAYS COMPARE TO THE OFFICIAL QUOTE AND CHECK IF TRANSLATIONS MAKE SENSE!!
+- If you you are not from team Gigan, edit the 'Equipe' and 'NOM PERMANENT' fields in the thorlabsBC_template.xlsx accordingly.
+- Open the thorlabs_exel.py script and go to the INPUT bloc on the top.
+- Enter the target directory where the 'shoppingCart.xls' file can be found and where you want the output BC file to be stored.
+- Check if you got an initial discount subtracted by the webshop (usually 2% for orders above 5k). If so enter it (i.e. discount_init = 0.02), otherwise set it to zero.
+- Check the dicount which is usually 9% for the LKB (i.e. discount_fin = 0.09).
+- Enter the shipping costs and run the code.
+- ALWAYS COMPARE TO THE OFFICIAL QUOTE AND CHECK IF PRICES ARE CORRECT AND TRANSLATIONS MAKE SENSE!!
 
 ## deatils:
 - The code implements two APIs for translation, Google translate and DeepL. The default is Google translate (trans_flag = 0) but this sometimes produces unsatisfying results (see known issues below). For the DeepL translation (trans_flag = 0) you need an account. There is a free version supporting 500k char a month which should be well enough even if you order a lot. Since I want this git to be public but don't want my athentification credentials to be in there you need to set up your own account and share the key with your collegues. Store the key in a text file named 'auth_deepl.txt' in the git directory.
