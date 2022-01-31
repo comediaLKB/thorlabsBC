@@ -36,7 +36,7 @@ from openpyxl.styles.borders import Border, Side
 from openpyxl.styles import Alignment
   
 # change working directory to file directory
-os.chdir(os.path.dirname(__file__))
+os.chdir(os.path.dirname(__file__) or '.')
 from nacres_from_thorlabs import nacres_from_thorlabs
 
 # load translate API
